@@ -1,12 +1,3 @@
-// document.getElementById("button-name").addEventListener("click", ()=>{eel.get_random_name()}, false);
-// document.getElementById("button-number").addEventListener("click", ()=>{eel.get_random_number()}, false);
-// document.getElementById("button-date").addEventListener("click", ()=>{eel.get_date()}, false);
-// document.getElementById("button-ip").addEventListener("click", ()=>{eel.get_ip()}, false);
-//
-// eel.expose(prompt_alerts);
-// function prompt_alerts(description) {
-//   alert(description);
-// }
 
 var buttons = document.querySelectorAll(".button").length;
 var inputs = document.getElementById("inputs");
@@ -39,11 +30,7 @@ function interpret(input){
   }
 }
 
-eel.expose(callResult);
-function callResult(args){
+eel.expose(postResult);
+function postResult(args){
   update(args);
-}
-eel.expose(jsLog);
-function jsLog(args){
-  console.log(args);
 }
