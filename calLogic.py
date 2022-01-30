@@ -1,4 +1,5 @@
 #imports
+# TODO: REFACTOR CODE AS PER PEP8 STANDARD
 #####   INTERPRET
 #vars
 operators = ["+","-","*",'/']
