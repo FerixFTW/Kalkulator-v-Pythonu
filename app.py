@@ -8,9 +8,10 @@ eel.init('web')
 #
 
 @eel.expose
-def parseInput(args):
+def parse_input(args):
+    print("> parsing input: ",args)
     result = logic.interpret(args)
-    eel.postResult(result)
+    eel.post_result(result)
 
 #
 eel.start('index.html')

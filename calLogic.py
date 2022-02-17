@@ -1,96 +1,155 @@
 #imports
-# TODO: REFACTOR CODE AS PER PEP8 STANDARD
+import math
 #####   INTERPRET
 #vars
 operators = ["+","-","*",'/']
 #def
 def interpret(args):
-    tempStorage = ['']*32
+    temp_storage = ['']*32
     index = 0
     result = list(args)
+    #parse all operators and slot them in individual indexes
     for element in result:
         if(element in operators):
             index = index + 1
-            tempStorage[index] = element
+            temp_storage[index] = element
             index = index + 1
         else:
-            tempStorage[index] = tempStorage[index]+element
-            # print("Temp loop 2: ",tempStorage)
+            temp_storage[index] = temp_storage[index]+element
+            # print("Temp loop 2: ",temp_storage)
+    #debug logging
+    # log("interpret > step 1")
+    # log(temp_storage)
+    # log("interpret > step 2")
+    #parse all exceptions: exponent, sqrt, logarithms and trig functions
+    index = 0
+    for element in temp_storage:
+        factor = 1
+        if("√" in element): #parse sqrt
+            sqrt_index = element.index("√")
+            if(sqrt_index!=0): #check factor before sqrt
+                factor=float(element[:sqrt_index])
+            temp_storage[index] = factor * math.sqrt(float(element[(sqrt_index+1):]))
+        elif("^" in element): #parse exponent
+            exp_index = element.index("^")
+            base = float(element[:exp_index])
+            exp = float(element[(exp_index+1):])
+            temp_storage[index] = math.pow(base,exp)
+        elif("log" in element): #parse logarithms
+            log_index = element.index("log")
+            if(log_index != 0):
+                factor = float(element[:log_index])
+            temp_storage[index] = factor * math.log10(float(element[(log_index+3):]))
+        elif("sin" in element): #parse trig functions
+            if((float(element[3:])/90)%2==0):
+                temp_storage[index] = 0
+            else:
+                temp_storage[index] = factor * math.sin(math.radians(float(element[3:])))
+            log(float(element[3:]))
+        elif("cos" in element):
+            if((float(element[3:])/90)%2!=0):
+                temp_storage[index] = 0
+            else:
+                temp_storage[index] = factor * math.cos(math.radians(float(element[3:])))
+        elif("tan" in element):
+            tan_value = element[3:]
+            temp_storage[index] = factor * math.tan(math.radians(float(element[3:])))
+        elif("cot" in element):
+            temp_storage[index] = factor * math.cos(math.radians(float(element[3:])))/math.sin(math.radians(float(element[3:])))
+        index = index + 1
+    ## TODO: FOR LOOP ALL ELEMENTS TO CHECK IF EXCEPTIONS HAVE FACTORS
+    return solve(temp_storage)
 
-    return solve(tempStorage)
 #####   SOLVE
 #vars
 #def
-def solve(tempStorage):
-    valStorage = 0
+def solve(temp_storage):
+    val_storage = 0
     index = 0
-    valStorage = int(tempStorage[index])
-    print("ValStorage step 0", valStorage)
-    print("tempStorage status: ", tempStorage)
-    for element in tempStorage:
+    try:
+        val_storage = float(temp_storage[index])
+    except:
+        log("Invalid inputs")
+        log(temp_storage)
+        return "err"
+    #print("val_storage step 0", val_storage)
+    #print("temp_storage status: ", temp_storage)
+    for element in temp_storage:
         if(element in operators):
+            #PARSE ADDITION
             if(element == "+"):
-                print("Index at operator detection: ",index)
-                if(priorityCheck(tempStorage,index)):
-                    print(valStorage, " + ", prioritySum(tempStorage,index))
-                    valStorage = valStorage + prioritySum(tempStorage,index)
-                    if(outOfBounds(tempStorage,index)):
+                #print("Index at operator detection: ",index)
+                if(priorityCheck(temp_storage,index)):
+                    print(val_storage, " + ", prioritySum(temp_storage,index))
+                    val_storage = val_storage + prioritySum(temp_storage,index)
+                    if(outOfBounds(temp_storage,index)):
                         break
                     else:
                         index = index + 4
-                    print("Index at priority check", index)
+                    #print("Index at priority check", index)
                 else:
-                    print(valStorage, "+", tempStorage[index+1])
-                    valStorage = valStorage + int(tempStorage[index+1])
+                    print(val_storage, "+", temp_storage[index+1])
+                    val_storage = val_storage + float(temp_storage[index+1])
+            #PARSE SUBTRACTION
             elif(element == "-"):
                 #   Debug progress check
-                if(priorityCheck(tempStorage,index)):
-                    print(valStorage, " - ", prioritySum(tempStorage,index))
-                    valStorage = valStorage - prioritySum(tempStorage,index)
-                    if(outOfBounds(tempStorage,index)):
+                if(priorityCheck(temp_storage,index)):
+                    print(val_storage, " - ", prioritySum(temp_storage,index))
+                    val_storage = val_storage - prioritySum(temp_storage,index)
+                    if(outOfBounds(temp_storage,index)):
                         break
                     else:
                         index = index + 4
-                    print("Index at priority check", index)
+                    #print("Index at priority check", index)
                 else:
-                    print(valStorage, "-", tempStorage[index+1])
-                    valStorage = valStorage - int(tempStorage[index+1])
+                    print(val_storage, "-", temp_storage[index+1])
+                    val_storage = val_storage - float(temp_storage[index+1])
+            #PARSE MULTIPLICATION
             elif(element == "*"):
                 #   Debug progress check
-                print(valStorage, "*", tempStorage[index+1])
+                print(val_storage, "*", temp_storage[index+1])
                 #
-                valStorage = valStorage * int(tempStorage[index+1])
+                val_storage = val_storage * float(temp_storage[index+1])
+            #PARSE DIVISION
             elif(element == "/"):
                 #   Debug progress check
-                print(valStorage, "/", tempStorage[index+1])
+                print(val_storage, "/", temp_storage[index+1])
                 #
-                valStorage = valStorage / int(tempStorage[index+1])
+                val_storage = val_storage / float(temp_storage[index+1])
+            #HANDLE END OF EXPRESSION
             elif(element == ''):
-                return valStorage
-            print("Valstorage step final ", valStorage)
+                return val_storage
+            #print("val_storage step final ", val_storage)
         index = index + 1
-    return valStorage
+    return val_storage
 ##### priorityCheck
 #vars
 #def
-def priorityCheck(tempStorage,index):
-    if(tempStorage[index+2]=="*" or tempStorage[index+2]=="/"):
+def priorityCheck(temp_storage,index):
+    if(temp_storage[index+2]=="*" or temp_storage[index+2]=="/"):
         return True
 
 ##### prioritySum
 #vars
 #def
-def prioritySum(tempStorage,index):
-    if(tempStorage[index+2] == "*"):
-        sum = int(tempStorage[index+3])*int(tempStorage[index+1])
-        print(tempStorage[index+3]," * ",tempStorage[index+1])
+def prioritySum(temp_storage,index):
+    if(temp_storage[index+2] == "*"):
+        sum = float(temp_storage[index+3])*float(temp_storage[index+1])
+        print(temp_storage[index+3]," * ",temp_storage[index+1])
     else:
-        sum = int(tempStorage[index+3])/int(tempStorage[index+1])
-        print(tempStorage[index+3]," / ",tempStorage[index+1])
+        sum = float(temp_storage[index+3])/float(temp_storage[index+1])
+        print(temp_storage[index+3]," / ",temp_storage[index+1])
     return sum
+
 ##### outOfBounds
 #vars
 #def
-def outOfBounds(tempStorage,index):
-    if(tempStorage[index+4]==''):
+def outOfBounds(temp_storage,index):
+    if(temp_storage[index+4]==''):
         return True
+
+##### log
+#vars
+#def
+def log(args):
+    print("> ",args)
