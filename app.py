@@ -9,8 +9,11 @@ eel.init('web')
 
 @eel.expose
 def parse_input(args):
+    print("----------------")
     print("> parsing input: ",args)
     result = logic.interpret(args)
+    print("----------------")
+    ## TODO: Call append_history
     eel.post_result(result)
 
 #

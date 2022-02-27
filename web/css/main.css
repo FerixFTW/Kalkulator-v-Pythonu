@@ -22,8 +22,8 @@
     background-color: #ddd;
     color: black;
   }
-/* INPUTS */
 
+/* INPUTS */
 .inputs{
   color: white;
   background-color: #333;
@@ -35,23 +35,19 @@
   outline:0;
 }
 
-
 /* INTERFACE */
 body{
   background-color: #333;
   font-family: 'Roboto', sans-serif;
-  /* Min values */
 }
-div{
-  /* border: 1px solid white; */
-}
+
 /* NUMPAD */
-table{
+.numpad > table{
   width: 70vw;
   height: 75vh;
 }
-td{
-  width: calc(70vw/4);
+tbody{
+  height: 75vh;
 }
 .numpad{
   position: absolute;
@@ -62,20 +58,26 @@ td{
   height: 75vh;
   width: 70vw;
 }
+
 .button{
   color: white;
   font-size: 24px;
   padding: 14px 16px;
   text-align: center;
-  font-weight: bolder
+  font-weight: bolder;
+  width: calc(70vw/4);
 }
+
 .button:hover{
   background-color: #404040;
 }
+
 .operator{
   background-color: gray;
 }
+
 /* HISTORY */
+/* TODO: FINISH AND DYNAMICALLY POPULATE HISTORY  */
 .history{
   position: absolute;
   overflow: hidden;
@@ -87,6 +89,25 @@ td{
   margin: 8px;
   border-left: 1px solid white;
 }
+
+.flex-container{
+  display: flex;
+  flex-direction: column;
+}
+.flex-container > div{
+  height: calc(76.92vh/6);
+  padding-left: 20px;
+  padding-top: 10px;
+}
+.expression{
+  height:15px;
+  color: gray;
+}
+.result{
+  height:15px;
+  color: white;
+}
+
 /* MEDIA */
 @media only screen and (max-width: 1200px) {
   .numpad, table{
@@ -98,6 +119,7 @@ td{
     width: 26vw;
   }
 }
+
 @media only screen and (max-width: 1000px) {
   .numpad, table{
     height: 70vh;

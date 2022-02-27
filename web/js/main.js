@@ -15,9 +15,6 @@ function update(text){
   inputs.value = text;
 }
 
-// flags
-//var result = 0;
-
 function interpret(input){
   //console.log(input);
   //if(result==1){update(""); result=0;}
@@ -35,4 +32,10 @@ function interpret(input){
 eel.expose(post_result);
 function post_result(args){
   update(args);
+}
+
+// TODO: Complete append_history
+eel.expose(append_history);
+function append_history(expression,result){
+  console.log("do nothing");
 }

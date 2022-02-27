@@ -16,11 +16,6 @@ def interpret(args):
             index = index + 1
         else:
             temp_storage[index] = temp_storage[index]+element
-            # print("Temp loop 2: ",temp_storage)
-    #debug logging
-    # log("interpret > step 1")
-    # log(temp_storage)
-    # log("interpret > step 2")
     #parse all exceptions: exponent, sqrt, logarithms and trig functions
     index = 0
     for element in temp_storage:
@@ -41,23 +36,33 @@ def interpret(args):
                 factor = float(element[:log_index])
             temp_storage[index] = factor * math.log10(float(element[(log_index+3):]))
         elif("sin" in element): #parse trig functions
-            if((float(element[3:])/90)%2==0):
+            sin_index = element.index("sin")
+            if(sin_index != 0):
+                factor = float(element[:sin_index])
+            if((float(element[(sin_index+3):])/90)%2==0):
                 temp_storage[index] = 0
             else:
-                temp_storage[index] = factor * math.sin(math.radians(float(element[3:])))
-            log(float(element[3:]))
+                temp_storage[index] = factor * math.sin(math.radians(float(element[(sin_index+3):])))
         elif("cos" in element):
-            if((float(element[3:])/90)%2!=0):
+            cos_index = element.index("cos")
+            if(cos_index != 0):
+                factor = float(element[:cos_index])
+            if((float(element[(cos_index+3):])/90)%2!=0):
                 temp_storage[index] = 0
             else:
-                temp_storage[index] = factor * math.cos(math.radians(float(element[3:])))
+                temp_storage[index] = factor * math.cos(math.radians(float(element[(cos_index+3):])))
         elif("tan" in element):
-            tan_value = element[3:]
-            temp_storage[index] = factor * math.tan(math.radians(float(element[3:])))
+            tan_index = element.index("tan")
+            if(tan_index != 0):
+                factor = float(element[:tan_index])
+            tan_value = element[(tan_index+3):]
+            temp_storage[index] = factor * math.tan(math.radians(float(element[(tan_index+3):])))
         elif("cot" in element):
-            temp_storage[index] = factor * math.cos(math.radians(float(element[3:])))/math.sin(math.radians(float(element[3:])))
+            cot_index = element.index("cot")
+            if(cot_index != 0):
+                factor = float(element[:cot_index])
+            temp_storage[index] = factor * math.cos(math.radians(float(element[(cot_index+3):])))/math.sin(math.radians(float(element[(cot_index+3):])))
         index = index + 1
-    ## TODO: FOR LOOP ALL ELEMENTS TO CHECK IF EXCEPTIONS HAVE FACTORS
     return solve(temp_storage)
 
 #####   SOLVE
@@ -69,16 +74,12 @@ def solve(temp_storage):
     try:
         val_storage = float(temp_storage[index])
     except:
-        log("Invalid inputs")
-        log(temp_storage)
+        log(["Invalid inputs", temp_storage])
         return "err"
-    #print("val_storage step 0", val_storage)
-    #print("temp_storage status: ", temp_storage)
     for element in temp_storage:
         if(element in operators):
             #PARSE ADDITION
             if(element == "+"):
-                #print("Index at operator detection: ",index)
                 if(priorityCheck(temp_storage,index)):
                     print(val_storage, " + ", prioritySum(temp_storage,index))
                     val_storage = val_storage + prioritySum(temp_storage,index)
@@ -86,7 +87,6 @@ def solve(temp_storage):
                         break
                     else:
                         index = index + 4
-                    #print("Index at priority check", index)
                 else:
                     print(val_storage, "+", temp_storage[index+1])
                     val_storage = val_storage + float(temp_storage[index+1])
@@ -100,7 +100,6 @@ def solve(temp_storage):
                         break
                     else:
                         index = index + 4
-                    #print("Index at priority check", index)
                 else:
                     print(val_storage, "-", temp_storage[index+1])
                     val_storage = val_storage - float(temp_storage[index+1])
@@ -119,9 +118,9 @@ def solve(temp_storage):
             #HANDLE END OF EXPRESSION
             elif(element == ''):
                 return val_storage
-            #print("val_storage step final ", val_storage)
         index = index + 1
     return val_storage
+
 ##### priorityCheck
 #vars
 #def
@@ -152,4 +151,6 @@ def outOfBounds(temp_storage,index):
 #vars
 #def
 def log(args):
-    print("> ",args)
+    for element in args:
+        print(">",element, end =" ")
+    print("")
