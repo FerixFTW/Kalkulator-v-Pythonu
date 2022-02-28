@@ -6,14 +6,22 @@ import calLogic as logic
 #
 eel.init('web')
 #
-
+# TODO: Figure out .exe packaging for python, send console stdout
+#       to a logging file with dynamic dating.
+#       As much functionality to reduce bullshit in disposition.
+# TODO: Finalise base calculator functionality before tackling
+#       graphing calculator.
 @eel.expose
-def parse_input(args):
+def parse_input(args,ans):
+    result = "err"
     print("----------------")
     print("> parsing input: ",args)
-    result = logic.interpret(args)
+    try:
+        result = logic.interpret(args,ans)
+    except Exception as e:
+        print(e)
     print("----------------")
-    ## TODO: Call append_history
+    eel.append_history(args,result)
     eel.post_result(result)
 
 #

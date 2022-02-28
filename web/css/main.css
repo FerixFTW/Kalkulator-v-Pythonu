@@ -29,7 +29,7 @@
   background-color: #333;
   padding: 14px 16px;
   padding-top: 50px;
-  font-size: 40px;
+  font-size: 60px;
   width: inherit;
   border: 0;
   outline:0;
@@ -46,9 +46,11 @@ body{
   width: 70vw;
   height: 75vh;
 }
+
 tbody{
   height: 75vh;
 }
+
 .numpad{
   position: absolute;
   overflow: hidden;
@@ -77,7 +79,6 @@ tbody{
 }
 
 /* HISTORY */
-/* TODO: FINISH AND DYNAMICALLY POPULATE HISTORY  */
 .history{
   position: absolute;
   overflow: hidden;
@@ -94,17 +95,22 @@ tbody{
   display: flex;
   flex-direction: column;
 }
+
 .flex-container > div{
   height: calc(76.92vh/6);
   padding-left: 20px;
   padding-top: 10px;
 }
+
 .expression{
-  height:15px;
+  height:30px;
+  font-size: 18px;
   color: gray;
 }
+
 .result{
   height:15px;
+  font-size: 24px;
   color: white;
 }
 
@@ -114,7 +120,7 @@ tbody{
     height: 72vh;
     width: 70vw;
   }
-  .history{
+  .history, .flex-container{
     height: 72vh;
     width: 26vw;
   }
@@ -123,11 +129,11 @@ tbody{
 @media only screen and (max-width: 1000px) {
   .numpad, table{
     height: 70vh;
-    width: 60vw;
+    width: 67vw;
   }
-  .history{
+  .history, .flex-container{
     height: 70vh;
-    width: 36vw;
+    width: 30vw;
   }
   .topnav{
     height: 25vh;

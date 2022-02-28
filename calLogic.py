@@ -4,7 +4,7 @@ import math
 #vars
 operators = ["+","-","*",'/']
 #def
-def interpret(args):
+def interpret(args,ans):
     temp_storage = ['']*32
     index = 0
     result = list(args)
@@ -62,13 +62,22 @@ def interpret(args):
             if(cot_index != 0):
                 factor = float(element[:cot_index])
             temp_storage[index] = factor * math.cos(math.radians(float(element[(cot_index+3):])))/math.sin(math.radians(float(element[(cot_index+3):])))
+        elif("ans" in element):
+            ans_index = element.index("ans")
+            if(ans_index != 0):
+                factor = float(element[:ans_index])
+            temp_storage[index] = factor * float(ans)
         index = index + 1
-    return solve(temp_storage)
+    #return solved expression to JS
+    return solve(temp_storage,ans)
 
 #####   SOLVE
 #vars
 #def
-def solve(temp_storage):
+# TODO: Finalize priority, start from the end of the expression
+#       and work your way forward. Perhaps dumb it down until
+#       you are left with addition and subtraction
+def solve(temp_storage,ans):
     val_storage = 0
     index = 0
     try:
