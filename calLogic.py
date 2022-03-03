@@ -74,87 +74,32 @@ def interpret(args,ans):
 #####   SOLVE
 #vars
 #def
-# TODO: Finalize priority, start from the end of the expression
-#       and work your way forward. Perhaps dumb it down until
-#       you are left with addition and subtraction
 def solve(temp_storage,ans):
-    val_storage = 0
+    #strip blank space from temp_storage and add blank space to end for end of expression
+    temp_storage[:] = (value for value in temp_storage if value != '')
+    temp_storage.append('')
+    #first solve multiplication and division
     index = 0
-    try:
-        val_storage = float(temp_storage[index])
-    except:
-        log(["Invalid inputs", temp_storage])
-        return "err"
     for element in temp_storage:
-        if(element in operators):
-            #PARSE ADDITION
-            if(element == "+"):
-                if(priorityCheck(temp_storage,index)):
-                    print(val_storage, " + ", prioritySum(temp_storage,index))
-                    val_storage = val_storage + prioritySum(temp_storage,index)
-                    if(outOfBounds(temp_storage,index)):
-                        break
-                    else:
-                        index = index + 4
-                else:
-                    print(val_storage, "+", temp_storage[index+1])
-                    val_storage = val_storage + float(temp_storage[index+1])
-            #PARSE SUBTRACTION
-            elif(element == "-"):
-                #   Debug progress check
-                if(priorityCheck(temp_storage,index)):
-                    print(val_storage, " - ", prioritySum(temp_storage,index))
-                    val_storage = val_storage - prioritySum(temp_storage,index)
-                    if(outOfBounds(temp_storage,index)):
-                        break
-                    else:
-                        index = index + 4
-                else:
-                    print(val_storage, "-", temp_storage[index+1])
-                    val_storage = val_storage - float(temp_storage[index+1])
-            #PARSE MULTIPLICATION
-            elif(element == "*"):
-                #   Debug progress check
-                print(val_storage, "*", temp_storage[index+1])
-                #
-                val_storage = val_storage * float(temp_storage[index+1])
-            #PARSE DIVISION
-            elif(element == "/"):
-                #   Debug progress check
-                print(val_storage, "/", temp_storage[index+1])
-                #
-                val_storage = val_storage / float(temp_storage[index+1])
-            #HANDLE END OF EXPRESSION
-            elif(element == ''):
-                return val_storage
+        if(temp_storage[index]=='*' or temp_storage[index]=='/'):
+            if(temp_storage[index]=='*'):
+                temp_storage[index-1]=float(temp_storage[index-1])*float(temp_storage[index+1])
+            else:
+                temp_storage[index-1]=float(temp_storage[index-1])/float(temp_storage[index+1])
+            temp_storage.pop(index)
+            temp_storage.pop(index)
+            continue
+        index = index + 1
+    #now solve addition and subtraction
+    val_storage = float(temp_storage[0])
+    index = 0
+    for element in temp_storage:
+        if(element == '+'):
+            val_storage = val_storage + float(temp_storage[index+1])
+        elif(element == '-'):
+            val_storage = val_storage - float(temp_storage[index+1])
         index = index + 1
     return val_storage
-
-##### priorityCheck
-#vars
-#def
-def priorityCheck(temp_storage,index):
-    if(temp_storage[index+2]=="*" or temp_storage[index+2]=="/"):
-        return True
-
-##### prioritySum
-#vars
-#def
-def prioritySum(temp_storage,index):
-    if(temp_storage[index+2] == "*"):
-        sum = float(temp_storage[index+3])*float(temp_storage[index+1])
-        print(temp_storage[index+3]," * ",temp_storage[index+1])
-    else:
-        sum = float(temp_storage[index+3])/float(temp_storage[index+1])
-        print(temp_storage[index+3]," / ",temp_storage[index+1])
-    return sum
-
-##### outOfBounds
-#vars
-#def
-def outOfBounds(temp_storage,index):
-    if(temp_storage[index+4]==''):
-        return True
 
 ##### log
 #vars

@@ -14,13 +14,13 @@ eel.init('web')
 @eel.expose
 def parse_input(args,ans):
     result = "err"
-    print("----------------")
-    print("> parsing input: ",args)
+    logic.log(["----------------"])
+    logic.log(["parsing input:",args])
     try:
         result = logic.interpret(args,ans)
     except Exception as e:
-        print(e)
-    print("----------------")
+        logic.log(e)
+    logic.log(["----------------"])
     eel.append_history(args,result)
     eel.post_result(result)
 
