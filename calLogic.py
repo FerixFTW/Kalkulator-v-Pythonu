@@ -6,7 +6,17 @@ import trig
 operators = ["+","-","*",'/']
 #def
 def interpret(args,ans):
-    temp_storage = list(args)
+    temp_storage = ['']*32
+    result = list(args)
+    #parse all operators and slot them in individual indexes
+    index = 0
+    for element in result:
+        if(element in operators):
+            index = index + 1
+            temp_storage[index] = element
+            index = index + 1
+        else:
+            temp_storage[index] = temp_storage[index]+element
     #parse all exceptions: exponent, sqrt, logarithms and trig functions
     index = 0
     for element in temp_storage:
@@ -68,6 +78,8 @@ def interpret(args,ans):
 
 #####   SOLVE
 def solve(temp_storage,ans):
+    #Strip empty space
+    temp_storage[:] = (value for value in temp_storage if value != '')
     #first solve multiplication and division
     index = 0
     for element in temp_storage:
@@ -93,6 +105,9 @@ def solve(temp_storage,ans):
 
 ##### log
 def log(args):
-    for element in args:
-        print(">",element, end =" ")
-    print("")
+    try:
+        for element in args:
+            print(">",element, end =" ")
+        print("")
+    except:
+        print("> invalid args passed to log()")
