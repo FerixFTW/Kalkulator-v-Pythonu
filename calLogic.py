@@ -10,13 +10,18 @@ def interpret(args,ans):
     result = list(args)
     #parse all operators and slot them in individual indexes
     index = 0
+    check = 0
     for element in result:
-        if(element in operators):
+        if(element in operators) and check == 0:
             index = index + 1
             temp_storage[index] = element
             index = index + 1
+            check = 1 #check to prevent 2 consecutive operators
         else:
             temp_storage[index] = temp_storage[index]+element
+            check = 0
+    #Strip empty space
+    temp_storage[:] = (value for value in temp_storage if value != '')
     #parse all exceptions: exponent, sqrt, logarithms and trig functions
     index = 0
     for element in temp_storage:
@@ -78,8 +83,6 @@ def interpret(args,ans):
 
 #####   SOLVE
 def solve(temp_storage,ans):
-    #Strip empty space
-    temp_storage[:] = (value for value in temp_storage if value != '')
     #first solve multiplication and division
     index = 0
     for element in temp_storage:
@@ -93,7 +96,14 @@ def solve(temp_storage,ans):
             continue
         index = index + 1
     #now solve addition and subtraction
-    val_storage = float(temp_storage[0])
+    val_storage = 0
+    #redundant negative first element check
+    if(temp_storage[0]=='-'):
+        val_storage = float(temp_storage[1])*-1
+        temp_storage.pop(0)
+    else:
+        val_storage = float(temp_storage[0])
+    #now finally solve
     index = 0
     for element in temp_storage:
         if(element == '+'):
