@@ -2,10 +2,8 @@
 import math
 import trig
 #####   INTERPRET
-#vars
-operators = ["+","-","*",'/']
-#def
-def interpret(args,ans):
+def parse_args(args):
+    operators = ["+","-","*",'/']
     temp_storage = ['']*32
     result = list(args)
     #parse all operators and slot them in individual indexes
@@ -20,8 +18,22 @@ def interpret(args,ans):
         else:
             temp_storage[index] = temp_storage[index]+element
             check = 0
-    #Strip empty space
+    #strip empty space
     temp_storage[:] = (value for value in temp_storage if value != '')
+    #prevent first element from being an operator
+    if temp_storage[0] in operators:
+        if temp_storage[0] == '-':
+            temp_storage[1] = '-'+temp_storage[1]
+        temp_storage.pop(0)
+    return temp_storage
+
+#### INTERPRET
+def interpret(args,ans):
+    #check if passed args is already a parsed array
+    if isinstance(args,list):
+        temp_storage = args
+    else:
+        temp_storage = parse_args(args)
     #parse all exceptions: exponent, sqrt, logarithms and trig functions
     index = 0
     for element in temp_storage:
@@ -31,9 +43,6 @@ def interpret(args,ans):
             if(sqrt_index!=0): #check factor before sqrt
                 factor=float(element[:sqrt_index])
             temp_storage[index] = factor * math.sqrt(float(element[(sqrt_index+1):]))
-        elif("-" in element and index == 0): #check if first element is negative
-            temp_storage[index+1] = float(temp_storage[index+1])*-1
-            temp_storage.pop(index)
         elif("^" in element): #parse exponent
             exp_index = element.index("^")
             base = float(element[:exp_index])

@@ -4,6 +4,7 @@ import numpy as np
 import calLogic as logic
 #get function roots - zeros
 # TODO: Trigonometric functions, check functionality
+# TODO: factors are dealt in same order as they are given - FIX IT
 def zeros(exponents,factors,sum):
     descending_exps = np.sort(exponents)[::-1]
     parsed_factors = []
@@ -26,6 +27,11 @@ def zeros(exponents,factors,sum):
     for intercept in zeros: #for each intercept append only real intercepts
         if not np.iscomplex(intercept):
             result.append(intercept)
+    # TODO: fix factor attribution
+    # logic.log(["expos",exponents])
+    #logic.log(["expos sorted",descending_exps])
+    # logic.log(["factors",factors])
+    #logic.log(["new factors",parsed_factors])
     if not result: #if result is empty return None
         return None
     elif 0j in result:
@@ -34,34 +40,22 @@ def zeros(exponents,factors,sum):
     else: #else return the intercepts
         return result
 
-
 #parse y from calculator
 def parse_y(args):
-    #parse y from calculator
-    operators = ["+","-","*",'/']
-    temp_storage = ['']*32
-    result = list(args)
-    #separate values from operators
-    index = 0
-    for element in result:
-        if(element in operators):
-            index = index + 1
-            temp_storage[index] = element
-            index = index + 1
-        else:
-            temp_storage[index] = temp_storage[index]+element
-    #strip whitespace
-    temp_storage[:] = (value for value in temp_storage if value != '')
-    #get factors and sum for final y calculation
+    temp_storage = logic.parse_args(args)
     factors = []
     exponents = []
-    # sum = 0
     index = 0
     for element in temp_storage:
         if "x" in element:
             x_index = element.index("x")
-            if x_index == 0:
+            if x_index == 0 and index==0:
                 factor = 1.0
+            elif x_index == 0 and index!=0: ## TODO: HOW TO WRITE THIS BETTER?
+                if temp_storage[index-1] == '-':
+                    factor = -1.0
+                else:
+                    factor = 1
             else:
                 #get factor
                 factor = float(element[:x_index])
@@ -69,8 +63,6 @@ def parse_y(args):
                     #check if factor is supposed to be negative
                     if(index != 0 and temp_storage[index-1]=="-"):
                         factor = factor*-1
-                    elif(index == 1 and temp_storage[index-1]=="-"):
-                        temp_storage.pop(index)
             #get exponent
             if "^" in element: #append explicit exponent
                 exp_index = element.index("^")
@@ -85,7 +77,7 @@ def parse_y(args):
             temp_storage[x_element_index]="0"
         #
         index = index + 1
-    sum = logic.solve(temp_storage,0)
+    sum = logic.interpret(temp_storage,0)
     ##### draw the actual graph ################################################
     #####
     fig, ax = plt.subplots()
@@ -98,7 +90,7 @@ def parse_y(args):
     ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
     #
     #finalise x and y declarations
-    x = np.linspace(-10, 10, 400)
+    x = np.linspace(-30, 30, 1000)
     y = sum
     for index in range(len(exponents)):
         y = y + np.power(x,exponents[index])*factors[index]
