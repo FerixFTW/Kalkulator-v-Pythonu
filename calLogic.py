@@ -1,3 +1,8 @@
+##### calLogic.py
+# Main calculator functionality
+# Meant to be called from outside
+# Point of entry is def interpret(args, ans)
+#
 #imports
 import math
 import trig
@@ -123,7 +128,7 @@ def solve(temp_storage,ans):
     return val_storage
 
 ##### log
-def log(args):
+def debug(args):
     try:
         for element in args:
             print(">",element, end =" ")

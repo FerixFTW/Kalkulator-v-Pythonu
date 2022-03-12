@@ -1,6 +1,7 @@
 #####trig.py
 # Return accurate results from trig functions
 # Takes degrees values by default
+#
 import math
 #
 # TODO: 0.5 and -0.5 values for all functions if I want true precision
