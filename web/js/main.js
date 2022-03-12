@@ -18,6 +18,20 @@ function append(text){
 function update(text){
   inputs.value = text;
 }
+//// Detect keyboard input directly
+document.addEventListener("keypress", function(event){
+  if (event.defaultPrevented) {
+    return; // Do nothing if the event was already processed
+  }
+  if(event.key == "Enter"){
+    eel.parse_input(inputs.value,ans);
+    // result = 1;
+  }
+  else{
+    append(event.key);
+  }
+  event.preventDefault();
+}, true);
 
 //// Interpret
 function interpret(input){
@@ -28,7 +42,7 @@ function interpret(input){
     case "log<sub>10</sub>(x)": append("log"); break;
     case "trig.": var trig = prompt("sin cos tan cot",""); append(trig); break;
     case "GRAPH": eel.parse_graph(inputs.value); break;
-    case "=": eel.parse_input(inputs.value,ans); result = 1; break;
+    case "=": eel.parse_input(inputs.value,ans); /*result = 1;*/ break;
     default: append(input); break;
   }
 }
