@@ -8,11 +8,13 @@ import calLogic as logic
 import graphing as graph
 from datetime import datetime
 #
-def log(exception):
+def log(args,exception):
     timestamp = datetime.now()
     with open("logfile.txt","a",encoding="utf-8") as logfile:
         logfile.write("------------------\n")
         logfile.write(str(timestamp)+"\n")
+        logfile.write("-\n")
+        logfile.write("args: "+str(args)+"\n")
         logfile.write("-\n")
         logfile.write(str(exception)+"\n")
         logfile.write("-\n")
@@ -32,7 +34,7 @@ def parse_input(args,ans):
     try:
         result = logic.interpret(args,ans)
     except Exception as e:
-        log(e)
+        log(args,e)
     #logic.debug(["----------------"])
     eel.append_history(args,result)
     eel.post_result(result)
@@ -42,7 +44,7 @@ def parse_graph(args):
     try:
         graph.parse_y(args)
     except Exception as e:
-        log(e)
+        log(args,e)
 #
 eel.start('index.html')
 #
