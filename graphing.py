@@ -1,3 +1,6 @@
+##### graphing.py
+# File that handles graphing logic and presentation
+# Meant to take same args as calLogic, works in tandem with it
 #
 import matplotlib.pyplot as plt
 import numpy as np
@@ -5,6 +8,7 @@ import calLogic as logic
 #get function roots - zeros
 # TODO: Trigonometric functions, check functionality
 # TODO: factors are dealt in same order as they are given - FIX IT
+# NOTE: Perhaps fix factor attribution with a list of tuples or a 2D array 
 def zeros(exponents,factors,sum):
     descending_exps = np.sort(exponents)[::-1]
     parsed_factors = []
@@ -28,10 +32,6 @@ def zeros(exponents,factors,sum):
         if not np.iscomplex(intercept):
             result.append(intercept)
     # TODO: fix factor attribution
-    # logic.log(["expos",exponents])
-    #logic.log(["expos sorted",descending_exps])
-    # logic.log(["factors",factors])
-    #logic.log(["new factors",parsed_factors])
     if not result: #if result is empty return None
         return None
     elif 0j in result:
@@ -51,11 +51,13 @@ def parse_y(args):
             x_index = element.index("x")
             if x_index == 0 and index==0:
                 factor = 1.0
-            elif x_index == 0 and index!=0: ## TODO: HOW TO WRITE THIS BETTER?
+            elif x_index == 0 and index!=0: ## TODO: HOW TO WRITE THIS WHOLE SECTION BETTER?
                 if temp_storage[index-1] == '-':
                     factor = -1.0
                 else:
                     factor = 1
+            elif x_index == 1 and index==0 and element[0]=='-':
+                factor = -1.0
             else:
                 #get factor
                 factor = float(element[:x_index])
