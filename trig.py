@@ -4,7 +4,6 @@
 #
 import math
 #
-# TODO: 0.5 and -0.5 values for all functions if I want true precision
 def sin(args):
     args = float(args) #redundancy float conversion
     if(args%180==0):

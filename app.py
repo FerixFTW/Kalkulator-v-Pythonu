@@ -23,19 +23,14 @@ def log(args,exception):
 #
 eel.init('web')
 #
-# TODO: Figure out .exe packaging for python (DONE), perhaps linux (TODO) package also.
-#       As much functionality to reduce bullshit in disposition.
 # TODO: Install from github page or curl or website
 @eel.expose
 def parse_input(args,ans):
     result = "err"
-    #logic.debug(["----------------"])
-    #logic.debug(["parsing input:",args])
     try:
         result = logic.interpret(args,ans)
     except Exception as e:
         log(args,e)
-    #logic.debug(["----------------"])
     eel.append_history(args,result)
     eel.post_result(result)
 #
