@@ -6,37 +6,32 @@ import matplotlib.pyplot as plt
 import numpy as np
 import calLogic as logic
 #get function roots - zeros
-# TODO: Trigonometric functions, check functionality
-# TODO: factors are dealt in same order as they are given - FIX IT
-# NOTE: Perhaps fix factor attribution with a list of tuples or a 2D array 
 def zeros(exponents,factors,sum):
-    descending_exps = np.sort(exponents)[::-1]
-    parsed_factors = []
-    parsed_factors.append(factors[0])
-    count = 0
-    for times in range(len(exponents)-1):
-        difference = descending_exps[count]-descending_exps[count+1]
-        count = count + 1
-        if (difference > 1):
-            count_inserts = difference - 1
-            for times in range(int(count_inserts)):
-                parsed_factors.append(0)
-            parsed_factors.append(factors[count])
-        else:
-            parsed_factors.append(factors[count])
-    ####################
+    factorsMatrix = [[0]*2 for i in range(len(exponents))]
+    index = 0
+    #take exponents and factor pairs and put them in a 2d arry
+    for element in factorsMatrix:
+        element[0] = exponents[index]
+        element[1] = factors[index]
+        index = index + 1
+    #sort descending by exponent
+    factorsMatrix.sort(key = lambda factorsMatrix:factorsMatrix[0], reverse=True)
+    parsed_factors = [0]*int(factorsMatrix[0][0])
+    parsed_factors[0]=(factorsMatrix[0][1])
+    #prepare proper args for np.roots - check np.roots docs for context
+    for element in factorsMatrix:
+        tgt_index = int(factorsMatrix[0][0]-element[0])
+        parsed_factors[tgt_index] = element[1]
+    ##############################################
     parsed_factors.append(sum)
     zeros = np.roots(parsed_factors)
     result = []
     for intercept in zeros: #for each intercept append only real intercepts
         if not np.iscomplex(intercept):
             result.append(intercept)
-    # TODO: fix factor attribution
+    logic.debug([result])
     if not result: #if result is empty return None
         return None
-    elif 0j in result:
-        result[result.index(0j)]=0
-        return result
     else: #else return the intercepts
         return result
 
@@ -47,11 +42,12 @@ def parse_y(args):
     exponents = []
     index = 0
     for element in temp_storage:
+        #x parsing and factor checking
         if "x" in element:
             x_index = element.index("x")
             if x_index == 0 and index==0:
                 factor = 1.0
-            elif x_index == 0 and index!=0: ## TODO: HOW TO WRITE THIS WHOLE SECTION BETTER?
+            elif x_index == 0 and index!=0:
                 if temp_storage[index-1] == '-':
                     factor = -1.0
                 else:
@@ -98,6 +94,7 @@ def parse_y(args):
         y = y + np.power(x,exponents[index])*factors[index]
     #draw intercepts
     plt.scatter(0,sum,s=50) #draw y axis intercept
+    logic.debug(["function:",args])
     x_intercepts = zeros(exponents,factors,sum)
     if x_intercepts != None:
         for x_cord in x_intercepts:
