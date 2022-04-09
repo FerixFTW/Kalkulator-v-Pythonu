@@ -9,7 +9,6 @@ def sin(args):
     if(args%180==0):
         return float(0)
     else:
-        print("sin ",math.sin(math.radians(args)))
         return math.sin(math.radians(args))
 #
 def cos(args):
@@ -17,7 +16,6 @@ def cos(args):
     if(((args*2-180)/360).is_integer()):
         return float(0)
     else:
-        print("cos ",math.cos(math.radians(args)))
         return math.cos(math.radians(args))
 #
 def tan(args):
