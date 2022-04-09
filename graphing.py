@@ -7,21 +7,21 @@ import numpy as np
 import calLogic as logic
 #get function roots - zeros
 def zeros(exponents,factors,sum):
-    factorsMatrix = [[0]*2 for i in range(len(exponents))]
+    factors_matrix = [[0]*2 for i in range(len(exponents))]
     index = 0
     #take exponents and factor pairs and put them in a 2d arry
-    for element in factorsMatrix:
-        element[0] = exponents[index]
-        element[1] = factors[index]
+    for pair in factors_matrix:
+        pair[0] = exponents[index]
+        pair[1] = factors[index]
         index = index + 1
     #sort descending by exponent
-    factorsMatrix.sort(key = lambda factorsMatrix:factorsMatrix[0], reverse=True)
-    parsed_factors = [0]*int(factorsMatrix[0][0])
-    parsed_factors[0]=(factorsMatrix[0][1])
+    factors_matrix.sort(key = lambda factors_matrix:factors_matrix[0], reverse=True)
+    parsed_factors = [0]*int(factors_matrix[0][0])
+    parsed_factors[0]=(factors_matrix[0][1])
     #prepare proper args for np.roots - check np.roots docs for context
-    for element in factorsMatrix:
-        tgt_index = int(factorsMatrix[0][0]-element[0])
-        parsed_factors[tgt_index] = element[1]
+    for pair in factors_matrix:
+        tgt_index = int(factors_matrix[0][0]-pair[0])
+        parsed_factors[tgt_index] = pair[1]
     ##############################################
     parsed_factors.append(sum)
     zeros = np.roots(parsed_factors)
