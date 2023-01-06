@@ -5,7 +5,6 @@
 #
 #imports
 import math
-import trig
 #####   INTERPRET
 def parse_args(args):
     operators = ["+","-","*",'/']
@@ -53,39 +52,6 @@ def interpret(args,ans):
             base = float(element[:exp_index])
             exp = float(element[(exp_index+1):])
             temp_storage[index] = math.pow(base,exp)
-        elif("log" in element): #parse logarithms
-            log_index = element.index("log")
-            if(log_index != 0):
-                factor = float(element[:log_index])
-            temp_storage[index] = factor * math.log10(float(element[(log_index+3):]))
-        elif("sin" in element): #parse trig functions
-            sin_index = element.index("sin")
-            value = float(element[(sin_index+3):])
-            if(sin_index != 0):
-                factor = float(element[:sin_index])
-            temp_storage[index] = factor * trig.sin(value)
-        elif("cos" in element):
-            cos_index = element.index("cos")
-            value = float(element[(cos_index+3):])
-            if(cos_index != 0):
-                factor = float(element[:cos_index])
-            temp_storage[index] = factor * trig.cos(value)
-        elif("tan" in element):
-            tan_index = element.index("tan")
-            value = float(element[(tan_index+3):])
-            if(tan_index != 0):
-                factor = float(element[:tan_index])
-            if(trig.tan(value) == "undefined"):
-                return "undefined"
-            temp_storage[index] = factor * trig.tan(value)
-        elif("cot" in element):
-            cot_index = element.index("cot")
-            value = float(element[(cot_index+3):])
-            if(cot_index != 0):
-                factor = float(element[:cot_index])
-            if(trig.cot(value) == "undefined"):
-                return "undefined"
-            temp_storage[index] = factor * trig.cot(value)
         elif("ans" in element):
             ans_index = element.index("ans")
             if(ans_index != 0):

@@ -5,7 +5,6 @@
 import eel
 import traceback
 import calLogic as logic
-import graphing as graph
 from datetime import datetime
 #
 def log(args,exception):
@@ -33,13 +32,6 @@ def parse_input(args,ans):
         log(args,e)
     eel.append_history(args,result)
     eel.post_result(result)
-#
-@eel.expose
-def parse_graph(args):
-    try:
-        graph.parse_y(args)
-    except Exception as e:
-        log(args,e)
 #
 eel.start('index.html')
 #

@@ -39,9 +39,9 @@ function interpret(input){
     case "C": update(""); break;
     case "DEL": update((inputs.value).slice(0,-1)); break;
     case "x<sup>2</sup>": append("^2"); break;
-    case "log<sub>10</sub>(x)": append("log"); break;
-    case "trig.": var trig = prompt("sin cos tan cot",""); append(trig); break;
-    case "GRAPH": eel.parse_graph(inputs.value); break;
+    // case "log<sub>10</sub>(x)": append("log"); break;
+    // case "trig.": var trig = prompt("sin cos tan cot",""); append(trig); break;
+    // case "GRAPH": eel.parse_graph(inputs.value); break;
     case "=": eel.parse_input(inputs.value,ans); /*result = 1;*/ break;
     default: append(input); break;
   }
