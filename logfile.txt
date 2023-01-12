@@ -1,0 +1,76 @@
+------------------
+2023-01-12 15:20:15.508433
+-
+args: 30clear
+-
+could not convert string to float: '30clear'
+-
+Traceback (most recent call last):
+  File "C:\Users\Zan\Downloads\FERI-naloge\ORS\sem2\Kalkulator-v-Pythonu\app.py", line 30, in parse_input
+    result = logic.interpret(args,ans)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zan\Downloads\FERI-naloge\ORS\sem2\Kalkulator-v-Pythonu\calLogic.py", line 62, in interpret
+    return solve(temp_storage,ans)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zan\Downloads\FERI-naloge\ORS\sem2\Kalkulator-v-Pythonu\calLogic.py", line 85, in solve
+    val_storage = float(temp_storage[0])
+                  ^^^^^^^^^^^^^^^^^^^^^^
+ValueError: could not convert string to float: '30clear'
+------------------
+------------------
+2023-01-12 15:20:16.470992
+-
+args: err
+-
+could not convert string to float: 'err'
+-
+Traceback (most recent call last):
+  File "C:\Users\Zan\Downloads\FERI-naloge\ORS\sem2\Kalkulator-v-Pythonu\app.py", line 30, in parse_input
+    result = logic.interpret(args,ans)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zan\Downloads\FERI-naloge\ORS\sem2\Kalkulator-v-Pythonu\calLogic.py", line 62, in interpret
+    return solve(temp_storage,ans)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zan\Downloads\FERI-naloge\ORS\sem2\Kalkulator-v-Pythonu\calLogic.py", line 85, in solve
+    val_storage = float(temp_storage[0])
+                  ^^^^^^^^^^^^^^^^^^^^^^
+ValueError: could not convert string to float: 'err'
+------------------
+------------------
+2023-01-12 19:48:21.375795
+-
+args: 2*5/2*12.5
+-
+list index out of range
+-
+Traceback (most recent call last):
+  File "C:\Users\Zan\Downloads\FERI-naloge\ORS\sem2\Kalkulator-v-Pythonu\app.py", line 30, in parse_input
+    result = logic.interpret(args,ans)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zan\Downloads\FERI-naloge\ORS\sem2\Kalkulator-v-Pythonu\calLogic.py", line 65, in interpret
+    return solve(temp_storage,ans)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zan\Downloads\FERI-naloge\ORS\sem2\Kalkulator-v-Pythonu\calLogic.py", line 73, in solve
+    if(temp_storage[index]=='*' or temp_storage[index]=='/'):
+       ~~~~~~~~~~~~^^^^^^^
+IndexError: list index out of range
+------------------
+------------------
+2023-01-12 19:48:51.884171
+-
+args: 2*5/2*12.5
+-
+list index out of range
+-
+Traceback (most recent call last):
+  File "C:\Users\Zan\Downloads\FERI-naloge\ORS\sem2\Kalkulator-v-Pythonu\app.py", line 30, in parse_input
+    result = logic.interpret(args,ans)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zan\Downloads\FERI-naloge\ORS\sem2\Kalkulator-v-Pythonu\calLogic.py", line 65, in interpret
+    return solve(temp_storage,ans)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zan\Downloads\FERI-naloge\ORS\sem2\Kalkulator-v-Pythonu\calLogic.py", line 73, in solve
+    if(temp_storage[index]=='*' or temp_storage[index]=='/'):
+       ~~~~~~~~~~~~^^^^^^^
+IndexError: list index out of range
+------------------

@@ -40,7 +40,10 @@ def interpret(args,ans):
         temp_storage = parse_args(args)
     #parse all exceptions: exponent, sqrt, logarithms and trig functions
     index = 0
+    print(args)
+    print(temp_storage)
     for element in temp_storage:
+        print("Loop: ", temp_storage)
         factor = 1
         if("√" in element): #parse sqrt
             sqrt_index = element.index("√")
@@ -67,6 +70,7 @@ def solve(temp_storage,ans):
     index = 0
     for element in temp_storage:
         if(temp_storage[index]=='*' or temp_storage[index]=='/'):
+            print("found *")
             if(temp_storage[index]=='*'):
                 temp_storage[index-1]=float(temp_storage[index-1])*float(temp_storage[index+1])
             else:
@@ -75,8 +79,11 @@ def solve(temp_storage,ans):
             temp_storage.pop(index)
             continue
         index = index + 1
+    print("Second loop: ", temp_storage)
     #now solve addition and subtraction
     val_storage = 0
+    if '*' in temp_storage:
+        val_storage = solve(temp_storage,ans)
     #redundant negative first element check
     if(temp_storage[0]=='-'):
         val_storage = float(temp_storage[1])*-1
@@ -91,6 +98,7 @@ def solve(temp_storage,ans):
         elif(element == '-'):
             val_storage = val_storage - float(temp_storage[index+1])
         index = index + 1
+    print("Val storage: ", val_storage)
     return val_storage
 
 ##### log
