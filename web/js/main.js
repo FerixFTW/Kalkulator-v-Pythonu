@@ -18,6 +18,11 @@ function append(text){
 function update(text){
   inputs.value = text;
 }
+
+function get_file(){
+  let filename = window.prompt("Input filename: ");
+  eel.parse_file(filename);
+}
 //// Detect keyboard input directly
 document.addEventListener("keypress", function(event){
   if (event.defaultPrevented) {
@@ -39,7 +44,8 @@ function interpret(input){
     case "C": update(""); break;
     case "DEL": update((inputs.value).slice(0,-1)); break;
     case "x<sup>2</sup>": append("^2"); break;
-    case "=": eel.parse_input(inputs.value,ans); /*result = 1;*/ break;
+    case "📁": get_file(); break; // TODO: call python function for file handling
+    case "=": eel.parse_input(inputs.value,ans); break;
     default: append(input); break;
   }
 }

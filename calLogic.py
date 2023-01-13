@@ -32,7 +32,7 @@ def parse_args(args):
     return temp_storage
 
 #### INTERPRET
-def interpret(args,ans):
+def interpret(args,ans=0):
     #check if passed args is already a parsed array
     if isinstance(args,list):
         temp_storage = args
@@ -69,8 +69,8 @@ def solve(temp_storage,ans):
     #first solve multiplication and division
     index = 0
     for element in temp_storage:
+        # add modulo operation from Žiga
         if(temp_storage[index]=='*' or temp_storage[index]=='/'):
-            print("found *")
             if(temp_storage[index]=='*'):
                 temp_storage[index-1]=float(temp_storage[index-1])*float(temp_storage[index+1])
             else:
@@ -79,11 +79,12 @@ def solve(temp_storage,ans):
             temp_storage.pop(index)
             continue
         index = index + 1
-    print("Second loop: ", temp_storage)
+    #redundant multiplication and division check
+    if ('*' in temp_storage) or ('/' in temp_storage):
+        print("Redundant */ triggered")
+        val_storage = solve(temp_storage,ans)
     #now solve addition and subtraction
     val_storage = 0
-    if '*' in temp_storage:
-        val_storage = solve(temp_storage,ans)
     #redundant negative first element check
     if(temp_storage[0]=='-'):
         val_storage = float(temp_storage[1])*-1

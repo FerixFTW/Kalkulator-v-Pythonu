@@ -4,7 +4,7 @@
 
 import calLogic as logic
 
-string = "((1+1)*5)/2*(25/2)"
+string = "5 * ( 3 + 4 )"
 
 print(string)
 
@@ -47,8 +47,8 @@ for i in range(6):
     for index in range(len(open_braces)-1):
         distance1 = close_braces[index] - open_braces[index]
         distance2 = close_braces[index] - open_braces[index+1]
-        print("\nIndex ", index)
-        print("Comparing: ", distance1, " ", distance2)
+        # print("\nIndex ", index)
+        # print("Comparing: ", distance1, " ", distance2)
         if( distance2 < distance1 and distance2 > 0 ):
             print("Switching")
             store = open_braces[index] # store current idx

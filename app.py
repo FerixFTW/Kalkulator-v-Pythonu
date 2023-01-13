@@ -5,6 +5,7 @@
 import eel
 import traceback
 import calLogic as logic
+import fileops as files
 from datetime import datetime
 #
 def log(args,exception):
@@ -32,6 +33,22 @@ def parse_input(args,ans):
         log(args,e)
     eel.append_history(args,result)
     eel.post_result(result)
+
+@eel.expose
+def parse_file(filename):
+    expressions = []
+    with open(filename,"r") as file:
+        for line in file:
+            expressions.append(line.rstrip())
+
+    print("ARGS: ", expressions[0])
+    print("ARGS: ", expressions[1])
+    print("ARGS: ", expressions[2])
+    results = files.parseFile(filename)
+    
+    for index,result in enumerate(results):
+        eel.append_history(expressions[index],result)
+        eel.post_result(result)
 #
 eel.start('index.html')
 #
