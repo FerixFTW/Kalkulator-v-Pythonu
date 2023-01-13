@@ -2,14 +2,18 @@
 # Main calculator functionality
 # Meant to be called from outside
 # Point of entry is def interpret(args, ans)
-#
+
 #imports
 import math
+import braces
+
 #####   INTERPRET
 def parse_args(args):
+    #default values
     operators = ["+","-","*",'/']
-    temp_storage = ['']*32
+    temp_storage = ['']*64
     result = list(args)
+
     #parse all operators and slot them in individual indexes
     index = 0
     check = 0
@@ -24,6 +28,7 @@ def parse_args(args):
             check = 0
     #strip empty space
     temp_storage[:] = (value for value in temp_storage if value != '')
+
     #prevent first element from being an operator
     if temp_storage[0] in operators:
         if temp_storage[0] == '-':
@@ -33,17 +38,20 @@ def parse_args(args):
 
 #### INTERPRET
 def interpret(args,ans=0):
+    #account for braces
+    if ('(' in args):
+        return braces.check_braces(args)
+
     #check if passed args is already a parsed array
     if isinstance(args,list):
         temp_storage = args
     else:
         temp_storage = parse_args(args)
+
     #parse all exceptions: exponent, sqrt, logarithms and trig functions
     index = 0
-    print(args)
-    print(temp_storage)
+
     for element in temp_storage:
-        print("Loop: ", temp_storage)
         factor = 1
         if("√" in element): #parse sqrt
             sqrt_index = element.index("√")
@@ -61,6 +69,7 @@ def interpret(args,ans=0):
                 factor = float(element[:ans_index])
             temp_storage[index] = factor * float(ans)
         index = index + 1
+
     #return solved expression to JS
     return solve(temp_storage,ans)
 
@@ -79,18 +88,21 @@ def solve(temp_storage,ans):
             temp_storage.pop(index)
             continue
         index = index + 1
+
     #redundant multiplication and division check
     if ('*' in temp_storage) or ('/' in temp_storage):
-        print("Redundant */ triggered")
         val_storage = solve(temp_storage,ans)
+
     #now solve addition and subtraction
     val_storage = 0
+
     #redundant negative first element check
     if(temp_storage[0]=='-'):
         val_storage = float(temp_storage[1])*-1
         temp_storage.pop(0)
     else:
         val_storage = float(temp_storage[0])
+
     #now finally solve
     index = 0
     for element in temp_storage:
@@ -99,7 +111,6 @@ def solve(temp_storage,ans):
         elif(element == '-'):
             val_storage = val_storage - float(temp_storage[index+1])
         index = index + 1
-    print("Val storage: ", val_storage)
     return val_storage
 
 ##### log
