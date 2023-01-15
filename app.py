@@ -31,6 +31,9 @@ def parse_input(args,ans):
         result = logic.interpret(args,ans)
     except Exception as e:
         log(args,e)
+
+    print("Expr.: ", args)
+    print("Result: ", result , "\n")
     eel.append_history(args,result)
     eel.post_result(result)
 
@@ -41,12 +44,11 @@ def parse_file(filename):
         for line in file:
             expressions.append(line.rstrip())
 
-    print("ARGS: ", expressions[0])
-    print("ARGS: ", expressions[1])
-    print("ARGS: ", expressions[2])
     results = files.parseFile(filename)
-    
+
     for index,result in enumerate(results):
+        print("Expr.: ", expressions[index])
+        print("Result: ", result , "\n")
         eel.append_history(expressions[index],result)
         eel.post_result(result)
 #
