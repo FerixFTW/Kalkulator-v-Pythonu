@@ -6,6 +6,7 @@
 #imports
 import math
 import braces
+import convert
 
 #####   INTERPRET
 def parse_args(args):
@@ -17,6 +18,7 @@ def parse_args(args):
     #parse all operators and slot them in individual indexes
     index = 0
     check = 0
+
     for element in result:
         if(element in operators) and check == 0:
             index = index + 1
@@ -34,10 +36,26 @@ def parse_args(args):
         if temp_storage[0] == '-':
             temp_storage[1] = '-'+temp_storage[1]
         temp_storage.pop(0)
+
     return temp_storage
 
 #### INTERPRET
 def interpret(args,ans=0):
+    # TODO: account for logic operations
+
+    #account for number system conversions
+    temp_args = args.split(" ")
+    conversion_tgts = ["BIN","OCT","HEX","DEC"]
+
+    if (temp_args[0].upper() in conversion_tgts) and (temp_args[2].upper() in conversion_tgts):
+        source = temp_args[0].upper()
+        number = temp_args[1]
+        target = temp_args[2].upper()
+
+        result = convert.parse_conversion(source, number, target)
+
+        return result
+
     #account for braces
     if ('(' in args):
         return braces.check_braces(args)
@@ -74,7 +92,8 @@ def interpret(args,ans=0):
     return solve(temp_storage,ans)
 
 #####   SOLVE
-def solve(temp_storage,ans):
+def solve(temp_storage,ans=0):
+    print("Called with: ", temp_storage)
     #first solve multiplication and division
     index = 0
     for element in temp_storage:
