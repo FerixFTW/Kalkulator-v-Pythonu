@@ -72,11 +72,14 @@ def interpret(args,ans=0):
 
     #parse all exceptions: exponent, sqrt and ans
     index = 0
-
+    
     for element in temp_storage:
         factor = 1
-        if("√" in element): #parse sqrt
-            sqrt_index = element.index("√")
+        if("√" in element or "s" in element): #parse sqrt
+            try:
+                sqrt_index = element.index("√")
+            except:
+                sqrt_index = element.index("s")
             if(sqrt_index!=0): #check factor before sqrt
                 factor=float(element[:sqrt_index])
             temp_storage[index] = factor * math.sqrt(float(element[(sqrt_index+1):]))
