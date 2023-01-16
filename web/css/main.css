@@ -59,6 +59,7 @@ tbody{
   margin: 8px;
   height: 75vh;
   width: 70vw;
+  user-select: none;
 }
 
 .button{
