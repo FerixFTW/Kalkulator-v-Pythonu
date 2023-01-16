@@ -3,6 +3,41 @@ Zacni program
 
 input = uporabniski vnos
 
+### Ugotovi kaj se bo racunalo
+
+zacasni_array = pretvori input v array, loci po presledkih
+pretvorbe = ["BIN","OCT","HEX","DEC"]
+logicne = ["AND","OR","NOT","NOR","NAND","XOR","XNOR"]
+
+if zacasni_array dolgi vsaj 4:
+  if prvi element zacasni_array med pretvorbe in ali tretji ali cetrti element zacasni_array med logicne:
+    sistem = prvi element zacasni_array
+    zanikan_prvi = True ce se pred prvo cifro nahaja "NOT"
+    zanikan_drugi = True ce se pred drugo cifro nahaja "NOT"
+    prva_cifra = prva cifra v izrazu
+    druga_cifra = druga cifra v izrazu
+    operator = zeljena operacija
+
+    parsed_array[sistem]
+
+    if zanikan_prvi:
+      negiraj(prva_cifra) in daj na konec parsed_array
+    else:
+      dodaj prva_cifra na konec parsed_array
+    if zanikan_drugi:
+      negiraj(druga_cifra) in daj na konec parsed_array
+    else:
+      dodaj druga_cifra na konec parsed_array
+
+    vrni in izpisi rezultat resi_logicno(parsed_array)
+
+if zacasni_array dolgi 3 in vsebuje na začetku in tretjem mestu element iz pretvorbe:
+  vir = prvi element zacasni_array
+  cifra = drugi element zacasni_array
+  cilj = tretji element zacasni_array
+
+  vrni in izpisi rezultat VIRtoCILJ(cifra)
+
 if ( input vsebuje '(' ):
   if( stevilo '(' in stevilo ')' ni enako ):
     vrni error in zakljuci racunanje
@@ -10,6 +45,8 @@ if ( input vsebuje '(' ):
   poracunaj vsebino oklepajev
   rezultat vstavi nazaj v izraz
   odstrani oklepaje
+
+### Izvedi klasicno racunanje
 
 array = []
 operatorji = ['+','-','*','/']
