@@ -8,7 +8,7 @@ def parseFile(file):
     results = []
     with open(file,"r") as read_file:
         for line in read_file:
-            result = logic.interpret(line.rstrip().replace(" ",""))
+            result = logic.interpret(line.rstrip())
             results.append(result)
 
     return results
