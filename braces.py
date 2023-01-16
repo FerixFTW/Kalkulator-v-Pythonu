@@ -38,8 +38,6 @@ def check_braces(string):
 
     # print the contents between the braces
 
-    brace_index = 0
-
     for index in range(len(open_braces)):
         contents = string[open_braces[index]+1:close_braces[index]].replace("(","").replace(")","")
         solved_contents = logic.interpret(contents,0)
