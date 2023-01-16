@@ -110,14 +110,39 @@ def pHEX(args):
     if "A" in args or "B" in args or "C" in args or "D" in args or "E" in args or "F" in args:
         return "Napaka, številka ni v pravilnem številskem sistemu."
     else:
+        args = eval(args)
         x = ""
-        args = int(args)
-        while (args > 15):
-            x += str(args % 16)
+        while args > 15:
+            y = str(args % 16)
+            if y == "15":
+                x += "F"
+            elif y == "14":
+                x += "E"
+            elif y == "13":
+                x += "D"
+            elif y == "12":
+                x += "C"
+            elif y == "11":
+                x += "B"
+            elif y == "10":
+                x += "A"
+            else:
+                x += y
             args = int(args / 16)
-            if args <= 15:
-                break
-        x += str(args)
+        if args == 15:
+            x += "F"
+        elif args == 14:
+            x += "E"
+        elif args == 13:
+            x += "D"
+        elif args == 12:
+            x += "C"
+        elif args == 11:
+            x += "B"
+        elif args == 10:
+            x += "A"
+        else:
+            x += str(args)
         return reverse(x)
 
 def BtoOCT(args):
@@ -143,6 +168,8 @@ def BtoDEC(args):
         args = int(args)
         z = 0
         utez = 1
+        if args == 0:
+            return 0
         while args != 0:
             x = args % 10
             z += x * utez
@@ -157,6 +184,8 @@ def BtoHEX(args):
     else:
         z = ""
         args = int(args)
+        if args == 0:
+            return "0"
         while (args != 0):
             x = args % 10000
             z += str(sprHEX(x))
@@ -170,6 +199,8 @@ def OtoBIN(args):
     else:
         z = ""
         args = int(args)
+        if args == 0:
+            return "0"
         while args != 0:
             x = args % 10
             z = str(sprOCTtoBIN(x)) + z
@@ -184,6 +215,8 @@ def OtoDEC(args):
         z = 0
         utez = 1
         args = int(args)
+        if args == 0:
+            return 0
         while args != 0:
             x = args % 10
             z += x * utez
@@ -513,10 +546,10 @@ def DEC_AND(st1, st2):
     st2 = pBIN(st2)
     return BtoDEC(BIN_AND(st1, st2))
 
-def DEC_NOR(st1, st2):
+def DEC_OR(st1, st2):
     st1 = pBIN(st1)
     st2 = pBIN(st2)
-    return BtoDEC(BIN_NOR(st1, st2))
+    return BtoDEC(BIN_OR(st1, st2))
 
 def DEC_NOT(st1):
     st1 = pBIN(st1)
