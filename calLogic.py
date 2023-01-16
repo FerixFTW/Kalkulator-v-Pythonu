@@ -41,20 +41,24 @@ def parse_args(args):
 
 #### INTERPRET
 def interpret(args,ans=0):
-    # TODO: account for logic operations
-
-    #account for number system conversions
+    #account for number system conversions and logic operations
     temp_args = args.split(" ")
     conversion_tgts = ["BIN","OCT","HEX","DEC"]
+    logic_tgts = ["AND","OR","NOT","NOR","NAND","XOR","XNOR"]
 
-    if (temp_args[0].upper() in conversion_tgts) and (temp_args[2].upper() in conversion_tgts):
-        source = temp_args[0].upper()
-        number = temp_args[1]
-        target = temp_args[2].upper()
+    if len(temp_args) > 3:
+        if (temp_args[0].upper() in conversion_tgts) and ((temp_args[2].upper() in logic_tgts) or (temp_args[3].upper() in logic_tgts)):
+            #we're looking at a logic operation
+            result = convert.parse_operation(temp_args)
 
-        result = convert.parse_conversion(source, number, target)
+            return result
 
-        return result
+    if len(temp_args) == 3:
+        if (temp_args[0].upper() in conversion_tgts) and (temp_args[2].upper() in conversion_tgts):
+            #we're looking at a direct conversion
+            result = convert.parse_conversion(temp_args)
+
+            return result
 
     #account for braces
     if ('(' in args):
@@ -66,7 +70,7 @@ def interpret(args,ans=0):
     else:
         temp_storage = parse_args(args)
 
-    #parse all exceptions: exponent, sqrt, logarithms and trig functions
+    #parse all exceptions: exponent, sqrt and ans
     index = 0
 
     for element in temp_storage:
@@ -94,6 +98,7 @@ def interpret(args,ans=0):
 #####   SOLVE
 def solve(temp_storage,ans=0):
     print("Called with: ", temp_storage)
+
     #first solve multiplication and division
     index = 0
     for element in temp_storage:
