@@ -32,6 +32,9 @@ def parse_input(args,ans):
     except Exception as e:
         log(args,e)
 
+    if ans != 0:
+        print("Ans: ", ans)
+        
     print("Expr.: ", args)
     print("Result: ", result , "\n")
     eel.append_history(args,result)
