@@ -40,7 +40,7 @@ def parse_args(args):
     return temp_storage
 
 #### INTERPRET
-def interpret(args,ans=0):
+def interpret(args,ans=0,from_braces=False):
     #account for number system conversions and logic operations
     temp_args = args.split(" ")
     conversion_tgts = ["BIN","OCT","HEX","DEC"]
@@ -61,7 +61,7 @@ def interpret(args,ans=0):
             return result
 
     #account for braces
-    if ('(' in args):
+    if ('(' in args and not from_braces):
         return braces.check_braces(args)
 
     #check if passed args is already a parsed array
@@ -72,27 +72,35 @@ def interpret(args,ans=0):
 
     #parse all exceptions: exponent, sqrt and ans
     index = 0
-    
+
     for element in temp_storage:
         factor = 1
-        if("√" in element or "s" in element): #parse sqrt
+        if("ans" in element):
+            ans_index = element.index("ans")
+            if(ans_index != 0):
+                #account for situation when ans is preceeded by exception, eg. √
+                try:
+                    factor = float(element[:ans_index])
+                except:
+                    pass
+
+            #replace ans in the string, continue
+            temp_storage[index] = element[:ans_index]+str(factor * float(ans))+element[ans_index+3:]
+            element = element[:ans_index]+str(factor * float(ans))+element[ans_index+3:]
+
+        if("√" in element or "q" in element): #parse sqrt
             try:
                 sqrt_index = element.index("√")
             except:
-                sqrt_index = element.index("s")
+                sqrt_index = element.index("q")
             if(sqrt_index!=0): #check factor before sqrt
                 factor=float(element[:sqrt_index])
             temp_storage[index] = factor * math.sqrt(float(element[(sqrt_index+1):]))
-        elif("^" in element): #parse exponent
+        if("^" in element): #parse exponent
             exp_index = element.index("^")
             base = float(element[:exp_index])
             exp = float(element[(exp_index+1):])
             temp_storage[index] = math.pow(base,exp)
-        elif("ans" in element):
-            ans_index = element.index("ans")
-            if(ans_index != 0):
-                factor = float(element[:ans_index])
-            temp_storage[index] = factor * float(ans)
         index = index + 1
 
     #return solved expression to JS

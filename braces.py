@@ -24,9 +24,10 @@ def check_braces(string):
         if letter == ')':
             close_braces.append(index)
 
+
     # check distances between indexes
 
-    for i in range(len(open_braces)):
+    for i in range(len(open_braces)+3):
         for index in range(len(open_braces)-1):
             distance1 = close_braces[index] - open_braces[index]
             distance2 = close_braces[index] - open_braces[index+1]
@@ -36,12 +37,13 @@ def check_braces(string):
                 open_braces[index] = open_braces[index+1] #
                 open_braces[index+1] = store
 
-    # print the contents between the braces
-
     for index in range(len(open_braces)):
         contents = string[open_braces[index]+1:close_braces[index]].replace("(","").replace(")","")
-        solved_contents = logic.interpret(contents,0)
+        solved_contents = logic.interpret(contents,0,True)
+
+        print("Replacing ",contents," with: ",solved_contents," in ",string)
         string = string.replace(contents,str(solved_contents))
+        print("Result of replace: ", string, "\n")
 
     parsed_string = string.replace("(","").replace(")","")
     result = logic.interpret(parsed_string)
