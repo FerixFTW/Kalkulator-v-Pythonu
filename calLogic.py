@@ -73,6 +73,8 @@ def interpret(args,ans=0,from_braces=False):
     #parse all exceptions: exponent, sqrt and ans
     index = 0
 
+    print("Going in: ", temp_storage)
+
     for element in temp_storage:
         factor = 1
         if("ans" in element):
@@ -88,19 +90,24 @@ def interpret(args,ans=0,from_braces=False):
             temp_storage[index] = element[:ans_index]+str(factor * float(ans))+element[ans_index+3:]
             element = element[:ans_index]+str(factor * float(ans))+element[ans_index+3:]
 
-        if("√" in element or "q" in element): #parse sqrt
+        if("√" in element or "q" in element):
             try:
                 sqrt_index = element.index("√")
             except:
                 sqrt_index = element.index("q")
-            if(sqrt_index!=0): #check factor before sqrt
+
+            #check factor before sqrt
+            if(sqrt_index!=0):
                 factor=float(element[:sqrt_index])
+
             temp_storage[index] = factor * math.sqrt(float(element[(sqrt_index+1):]))
-        if("^" in element): #parse exponent
+
+        if("^" in element):
             exp_index = element.index("^")
             base = float(element[:exp_index])
             exp = float(element[(exp_index+1):])
             temp_storage[index] = math.pow(base,exp)
+
         index = index + 1
 
     #return solved expression to JS
@@ -110,10 +117,17 @@ def interpret(args,ans=0,from_braces=False):
 def solve(temp_storage,ans=0):
     print("Called with: ", temp_storage)
 
-    #first solve multiplication and division
+    #first solve multiplication and division and modulo
     index = 0
+    
     for element in temp_storage:
-        # add modulo operation from Žiga
+        if("%" in element):
+            mod_index = element.index("%")
+            left = element[:mod_index]
+            right = element[mod_index+1:]
+            temp_storage[index] = str(float(left)%float(right))
+            element = str(float(left)%float(right))
+
         if(temp_storage[index]=='*' or temp_storage[index]=='/'):
             if(temp_storage[index]=='*'):
                 temp_storage[index-1]=float(temp_storage[index-1])*float(temp_storage[index+1])
@@ -122,6 +136,7 @@ def solve(temp_storage,ans=0):
             temp_storage.pop(index)
             temp_storage.pop(index)
             continue
+
         index = index + 1
 
     #redundant multiplication and division check
