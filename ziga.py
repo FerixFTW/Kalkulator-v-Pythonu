@@ -76,7 +76,7 @@ def sprHEXtoBIN(args):
 ################################## EXTERNAL FNCS ###############################
 
 def pBIN(args):
-    args = args.upper()
+    args = str(args.upper())
     if "A" in args or "B" in args or "C" in args or "D" in args or "E" in args or "F" in args:
         return "Napaka, številka ni v pravilnem številskem sistemu."
     else:
@@ -91,7 +91,8 @@ def pBIN(args):
         return reverse(x)
 
 def pOCT(args):
-    args = args.upper()
+    args = str(args)
+    args = str(args.upper())
     if "A" in args or "B" in args or "C" in args or "D" in args or "E" in args or "F" in args:
         return "Napaka, številka ni v pravilnem številskem sistemu."
     else:
@@ -106,11 +107,11 @@ def pOCT(args):
         return reverse(x)
 
 def pHEX(args):
-    args = args.upper()
+    args = str(args.upper())
     if "A" in args or "B" in args or "C" in args or "D" in args or "E" in args or "F" in args:
         return "Napaka, številka ni v pravilnem številskem sistemu."
     else:
-        args = eval(args)
+        args = int(args)
         x = ""
         while args > 15:
             y = str(args % 16)
@@ -146,7 +147,7 @@ def pHEX(args):
         return reverse(x)
 
 def BtoOCT(args):
-    args = args.upper()
+    args = str(args.upper())
     if "2" in args or "3" in args or "4" in args or "5" in args or "6" in args or "7" in args or "8" in args or "9" in args or "A" in args or "B" in args or "C" in args or "D" in args or "E" in args or "F" in args:
         return "Napaka, številka ni v pravilnem številskem sistemu."
     args = int(args)
@@ -161,7 +162,7 @@ def BtoOCT(args):
         return reverse(z)
 
 def BtoDEC(args):
-    args = args.upper()
+    args = str(args.upper())
     if "2" in args or "3" in args or "4" in args or "5" in args or "6" in args or "7" in args or "8" in args or "9" in args or "A" in args or "B" in args or "C" in args or "D" in args or "E" in args or "F" in args:
         return "Napaka, številka ni v pravilnem številskem sistemu."
     else:
@@ -178,7 +179,7 @@ def BtoDEC(args):
         return z
 
 def BtoHEX(args):
-    args = args.upper()
+    args = str(args.upper())
     if "2" in args or "3" in args or "4" in args or "5" in args or "6" in args or "7" in args or "8" in args or "9" in args or "A" in args or "B" in args or "C" in args or "D" in args or "E" in args or "F" in args:
         return "Napaka, številka ni v pravilnem številskem sistemu."
     else:
@@ -193,7 +194,7 @@ def BtoHEX(args):
         return reverse(z)
 
 def OtoBIN(args):
-    args = args.upper()
+    args = str(args.upper())
     if "8" in args or "9" in args or "A" in args or "B" in args or "C" in args or "D" in args or "E" in args or "F" in args:
         return "Napaka, številka ni v pravilnem številskem sistemu."
     else:
@@ -208,7 +209,7 @@ def OtoBIN(args):
         return z
 
 def OtoDEC(args):
-    args = args.upper()
+    args = str(args.upper())
     if "8" in args or "9" in args or "A" in args or "B" in args or "C" in args or "D" in args or "E" in args or "F" in args:
         return "Napaka, številka ni v pravilnem številskem sistemu."
     else:
@@ -225,7 +226,7 @@ def OtoDEC(args):
         return z
 
 def OtoHEX(args):
-    args = args.upper()
+    args = str(args.upper())
     if "8" in args or "9" in args or "A" in args or "B" in args or "C" in args or "D" in args or "E" in args or "F" in args:
         return "Napaka, številka ni v pravilnem številskem sistemu."
     else:
@@ -233,7 +234,7 @@ def OtoHEX(args):
         return BtoHEX(args)
 
 def HtoBIN(args):
-    args = args.upper()
+    args = str(args.upper())
     z = ""
     for i in range(len(args)):
         x = args[len(args) - i - 1:len(args) - i]
@@ -242,12 +243,12 @@ def HtoBIN(args):
     return z
 
 def HtoOCT(args):
-    args = args.upper()
+    args = str(args.upper())
     args = HtoBIN(args)
     return BtoOCT(args)
 
 def HtoDEC(args):
-    args = args.upper()
+    args = str(args.upper())
     utez = 1
     z = 0
     for i in range(len(args)):
@@ -265,7 +266,7 @@ def HtoDEC(args):
         elif x == "F":
             z += 15 * utez
         else:
-            z += eval(x) * utez
+            z += int(x) * utez
         utez *= 16
     return z
 
