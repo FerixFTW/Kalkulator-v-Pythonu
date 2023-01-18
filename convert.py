@@ -156,17 +156,6 @@ def parse_operation(temp_args):
     else:
         parsed_args.append(second_number)
 
-
-    #debug prints
-    print("Num system: ", num_system)
-    print("NEGATE first_number: ", negate_first)
-    print("first_number: ", first_number)
-    print("Operator: ", operator)
-    print("NEGATE second_number: ", negate_second)
-    print("second_number: ", second_number,"\n")
-
-    print("Parsed args: ", parsed_args, "\n")
-
     #solve parsed_args and return to frontend
     result = solve_operation(parsed_args)
 
