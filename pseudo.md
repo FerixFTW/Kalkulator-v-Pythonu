@@ -3,6 +3,11 @@ Zacni program
 
 input = uporabniski vnos
 
+if( input je pot do datoteke ):
+  for( vrstica v datoteki ):
+    input = vrstica
+    program(input)
+
 ### Ugotovi kaj se bo racunalo
 
 zacasni_array = pretvori input v array, loci po presledkih

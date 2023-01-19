@@ -100,13 +100,13 @@ def interpret(args,ans=0,from_braces=False):
             if(sqrt_index!=0):
                 factor=float(element[:sqrt_index])
 
-            temp_storage[index] = factor * math.sqrt(float(element[(sqrt_index+1):]))
+            temp_storage[index] = str(factor * math.sqrt(float(element[(sqrt_index+1):])))
 
         if("^" in element):
             exp_index = element.index("^")
             base = float(element[:exp_index])
             exp = float(element[(exp_index+1):])
-            temp_storage[index] = math.pow(base,exp)
+            temp_storage[index] = str(math.pow(base,exp))
 
         index = index + 1
 
@@ -119,7 +119,7 @@ def solve(temp_storage,ans=0):
 
     #first solve multiplication and division and modulo
     index = 0
-    
+
     for element in temp_storage:
         if("%" in element):
             mod_index = element.index("%")
@@ -130,9 +130,9 @@ def solve(temp_storage,ans=0):
 
         if(temp_storage[index]=='*' or temp_storage[index]=='/'):
             if(temp_storage[index]=='*'):
-                temp_storage[index-1]=float(temp_storage[index-1])*float(temp_storage[index+1])
+                temp_storage[index-1]=str(float(temp_storage[index-1])*float(temp_storage[index+1]))
             else:
-                temp_storage[index-1]=float(temp_storage[index-1])/float(temp_storage[index+1])
+                temp_storage[index-1]=str(float(temp_storage[index-1])/float(temp_storage[index+1]))
             temp_storage.pop(index)
             temp_storage.pop(index)
             continue
